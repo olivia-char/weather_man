@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Weather Man</title>
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('form').submit(function(){
+			var user_input = $("input[name='user_input']").val();
+			console.log(user_input);
+
+
+			$.get("http://api.openweathermap.org/data/2.5/weather?q="+user_input+"&&appid=9de57ddb2cb02fa07b01cf630c271e1f", function(res) {
+        
+				var city_name = res.name;
+				console.log(city_name);
+
+				var temp = res.main.temp;
+				console.log(temp);
+
+				var f_temp = Math.floor(temp * 9/5 - 459.67);
+				console.log(f_temp);
+
+				$('#weather').html("<h1>" + city_name + "</h1>" + "<h3>Temperature " + f_temp +"</h3>")
+
+        	console.log(res);
+    		}, "json");
+
+			return false;
+		});
+	});
+	</script>
+</head>
+<body>
+	<form>
+		Enter City:<input type="text" name="user_input">
+		<input type="submit" name="submit">
+	</form>
+	<div id="weather"></div>
+</body>
+</html>
